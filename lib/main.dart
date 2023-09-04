@@ -44,6 +44,8 @@ class LoginScreen extends StatelessWidget {
     await pb.collection('teachers').authWithOAuth2('google', (url) async {
       await launchUrl(url);
     });
+
+    print(pb.authStore.token);
     if (pb.authStore.isValid) context.go("/home");
   }
 

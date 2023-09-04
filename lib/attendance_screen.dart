@@ -1,5 +1,6 @@
 import 'package:erp_admin/main.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AttendanceScreen extends StatefulWidget {
   const AttendanceScreen({super.key});
@@ -9,7 +10,25 @@ class AttendanceScreen extends StatefulWidget {
 }
 
 class _AttendanceScreenState extends State<AttendanceScreen> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
+
+  void pickDate(BuildContext context) async {
+    final now = DateTime.now();
+    final DateTime? date = await showDatePicker(
+        context: context,
+        initialDate: now,
+        firstDate: now,
+        lastDate: DateTime(2024));
+
+    if (date == null) return;
+
+    if (!context.mounted) return;
+
+    final a = await pb
+        .collection("classes")
+        .getFirstListItem("teacher='${pb.authStore.model!.id}'");
+    print(a);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +52,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
           ],
           selectedIndex: _selectedIndex,
           onDestinationSelected: (value) {
-            setState(() {
-              _selectedIndex = value;
-            });
+            if (value == 0) {
+              context.go("/home");
+            }
           },
         ),
         Column(
@@ -45,12 +64,15 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Home",
+                  Text("Attendance",
                       style: Theme.of(context)
                           .textTheme
                           .headlineLarge!
                           .copyWith(fontWeight: FontWeight.bold)),
-                  const Text("Attendance for Open Source Technologies")
+                  const Text("Mark attendance for your period"),
+                  FilledButton(
+                      onPressed: () => pickDate(context),
+                      child: const Text("Pick Date"))
                 ],
               ),
             ),
