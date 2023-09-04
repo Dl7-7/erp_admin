@@ -6,7 +6,7 @@ import 'package:pocketbase/pocketbase.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:go_router/go_router.dart';
 
-final pb = PocketBase('https://erp-back.fly.dev');
+final pb = PocketBase('https://erp-back2.fly.dev');
 
 final GoRouter _router = GoRouter(
   routes: [

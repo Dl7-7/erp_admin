@@ -63,6 +63,9 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             if (value == 0) {
               context.go("/home");
             }
+            if (value == 2) {
+              context.go("/settings");
+            }
           },
         ),
         Expanded(
