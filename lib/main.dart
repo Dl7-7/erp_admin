@@ -1,3 +1,4 @@
+import 'package:erp_admin/attendance_screen.dart';
 import 'package:erp_admin/home_screen.dart';
 import 'package:erp_admin/settings_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ final GoRouter _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => LoginScreen()),
     GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
+    GoRoute(
+        path: '/attendance', builder: (context, state) => AttendanceScreen()),
     GoRoute(path: '/settings', builder: (context, state) => SettingsScreen())
   ],
 );

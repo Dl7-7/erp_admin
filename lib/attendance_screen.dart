@@ -1,15 +1,14 @@
 import 'package:erp_admin/main.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class AttendanceScreen extends StatefulWidget {
+  const AttendanceScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<AttendanceScreen> createState() => _AttendanceScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _AttendanceScreenState extends State<AttendanceScreen> {
   int _selectedIndex = 0;
 
   @override
@@ -34,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
           selectedIndex: _selectedIndex,
           onDestinationSelected: (value) {
-            if (value == 1) context.go("/attendance");
+            setState(() {
+              _selectedIndex = value;
+            });
           },
         ),
         Column(
