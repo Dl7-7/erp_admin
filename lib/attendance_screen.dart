@@ -89,18 +89,20 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
                               child: ListView.builder(
                                   itemCount: users!.length,
                                   itemBuilder: (context, i) {
-                                    return ListTile(
-                                      leading: Icon(Icons.abc),
-                                      title: Text(
-                                          users![i].getStringValue("name")),
-                                      trailing: Switch(
-                                        value: a,
-                                        onChanged: (bool value) {
-                                          // This is called when the user toggles the switch.
-                                          setState(() {
-                                            a = value;
-                                          });
-                                        },
+                                    return Card(
+                                      child: ListTile(
+                                        leading: Icon(Icons.person),
+                                        title: Text(
+                                            users![i].getStringValue("name")),
+                                        trailing: Switch(
+                                          value: a,
+                                          onChanged: (bool value) {
+                                            // This is called when the user toggles the switch.
+                                            setState(() {
+                                              a = value;
+                                            });
+                                          },
+                                        ),
                                       ),
                                     );
                                   }),
