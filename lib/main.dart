@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:pocketbase/pocketbase.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+final pb = PocketBase('http://127.0.0.1:8090');
 
 void main() {
   runApp(const MyApp());
@@ -32,7 +36,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   void login() async {
-    print("Hello");
+    final auth =
+        await pb.collection('teachers').authWithOAuth2('google', (url) async {
+      await launchUrl(url);
+    });
   }
 
   @override
@@ -58,9 +65,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: 30,
             ),
             FilledButton(
-              onPressed: () async {
-                login();
-              },
+              onPressed: login,
               child: const Text("Login With Google"),
             ),
           ],
