@@ -1,3 +1,4 @@
+import 'package:erp_admin/home_screen.dart';
 import 'package:erp_admin/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:pocketbase/pocketbase.dart';
@@ -9,7 +10,7 @@ final pb = PocketBase('http://127.0.0.1:8090');
 final GoRouter _router = GoRouter(
   routes: [
     GoRoute(path: '/', builder: (context, state) => LoginScreen()),
-    // GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
+    GoRoute(path: '/home', builder: (context, state) => HomeScreen()),
     GoRoute(path: '/settings', builder: (context, state) => SettingsScreen())
   ],
 );
@@ -40,35 +41,37 @@ class LoginScreen extends StatelessWidget {
     await pb.collection('teachers').authWithOAuth2('google', (url) async {
       await launchUrl(url);
     });
-    if (pb.authStore.isValid) context.go("/settings");
+    if (pb.authStore.isValid) context.go("/home");
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Image.asset('assets/images/img_login.png'),
-          const SizedBox(
-            height: 15,
-          ),
-          Text(
-            "Welcome to ERP",
-            style: Theme.of(context)
-                .textTheme
-                .headlineLarge!
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-          const Text("A simple way to track your attendance"),
-          const SizedBox(
-            height: 30,
-          ),
-          FilledButton(
-            onPressed: () => login(context),
-            child: const Text("Login With Google"),
-          ),
-        ],
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset('assets/images/img_login.png'),
+            const SizedBox(
+              height: 15,
+            ),
+            Text(
+              "Welcome to ERP",
+              style: Theme.of(context)
+                  .textTheme
+                  .headlineLarge!
+                  .copyWith(fontWeight: FontWeight.bold),
+            ),
+            const Text("A simple way to track your attendance"),
+            const SizedBox(
+              height: 30,
+            ),
+            FilledButton(
+              onPressed: () => login(context),
+              child: const Text("Login With Google"),
+            ),
+          ],
+        ),
       ),
     );
   }
