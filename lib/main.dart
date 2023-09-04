@@ -57,7 +57,7 @@ class _MyHomePageState extends State<MyHomePage> {
             const SizedBox(
               height: 30,
             ),
-            ElevatedButton(
+            FilledButton(
               onPressed: () async {
                 login();
               },
