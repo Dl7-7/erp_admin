@@ -28,10 +28,13 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
     // classes = getClasses();
   }
 
+  bool a = true;
+
   Future<RecordModel>? getClasses() async {
     final a = await pb.collection("classes").getFirstListItem(
         "teacher='${pb.authStore.model!.id}'",
         expand: "users");
+    // print(a);
     return a;
   }
 
@@ -62,38 +65,56 @@ class _AttendanceScreenState extends State<AttendanceScreen> {
             }
           },
         ),
-        Column(
-          children: [
-            Text("Attendance",
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineLarge!
-                    .copyWith(fontWeight: FontWeight.bold)),
-            const Text("Mark attendance for your period"),
-            Expanded(
-              child: FutureBuilder<RecordModel>(
-                  future: getClasses(),
-                  builder: (context, snapshot) {
-                    print(snapshot.connectionState);
-                    if (snapshot.hasData) {
-                      final users = snapshot.data!.data;
-                      print(users['users'].length);
-                      print(users['users']);
-                      return ListView.builder(itemBuilder: (context, i) {
-                        return Container(
-                          color: Colors.orange,
-                          child: ListTile(
-                            trailing: Icon(Icons.deblur),
-                          ),
+        Expanded(
+          child: Column(
+            children: [
+              Text("Attendance",
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
+                      .copyWith(fontWeight: FontWeight.bold)),
+              const Text("Mark attendance for your period"),
+              Expanded(
+                child: FutureBuilder<RecordModel>(
+                    future: getClasses(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        // print(users);
+                        print(snapshot.data!.expand['users']);
+                        final users = snapshot.data!.expand['users'];
+                        return Column(
+                          children: [
+                            Text(snapshot.data!.data['name']),
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: users!.length,
+                                  itemBuilder: (context, i) {
+                                    return ListTile(
+                                      leading: Icon(Icons.abc),
+                                      title: Text(
+                                          users![i].getStringValue("name")),
+                                      trailing: Switch(
+                                        value: a,
+                                        onChanged: (bool value) {
+                                          // This is called when the user toggles the switch.
+                                          setState(() {
+                                            a = value;
+                                          });
+                                        },
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
                         );
-                      });
-                    } else if (snapshot.hasError) {
-                      return const Text("Error");
-                    }
-                    return const CircularProgressIndicator();
-                  }),
-            ),
-          ],
+                      } else if (snapshot.hasError) {
+                        return const Text("Error");
+                      }
+                      return const CircularProgressIndicator();
+                    }),
+              ),
+            ],
+          ),
         )
       ]),
     );
