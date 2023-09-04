@@ -1,3 +1,4 @@
+import 'package:erp_admin/main.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -19,22 +20,30 @@ class _HomeScreenState extends State<HomeScreen> {
             destinations: const <NavigationRailDestination>[
               NavigationRailDestination(
                 icon: Icon(Icons.home_filled),
-                selectedIcon: Icon(Icons.favorite),
-                label: Text('First'),
+                label: Text('Home'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.bookmark_border),
-                selectedIcon: Icon(Icons.book),
-                label: Text('Second'),
+                icon: Icon(Icons.calendar_month),
+                label: Text('Attendance'),
               ),
               NavigationRailDestination(
-                icon: Icon(Icons.star_border),
-                selectedIcon: Icon(Icons.star),
-                label: Text('Third'),
+                icon: Icon(Icons.settings),
+                label: Text('Settings'),
               ),
             ],
             selectedIndex: _selectedIndex),
-        const Text("HHello")
+        Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(pb.authStore.model!.id,
+                  style: Theme.of(context)
+                      .textTheme
+                      .headlineLarge!
+                      .copyWith(fontWeight: FontWeight.bold)),
+            ),
+          ],
+        )
       ]),
     );
   }
